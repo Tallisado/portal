@@ -5,6 +5,20 @@ angular.module('releases').controller('ReleasesController', ['$scope', '$statePa
   function ($scope, $stateParams, $location, Authentication, Releases) {
     $scope.authentication = Authentication;
 
+    $scope.slackMessage = function () {
+      console.log('client slackMessage');
+      var release = $scope.release;
+      release.slack = "1";
+      //console.log(release);
+
+      release.$update(function () {
+        console.log("BACK IN CLIENT");
+        //$location.path('releases/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+
     // Create new Release
     $scope.create = function (isValid) {
       $scope.error = null;
@@ -16,11 +30,16 @@ angular.module('releases').controller('ReleasesController', ['$scope', '$statePa
 
       // Create new Release object
       var release = new Releases({
-        utrack_id: this.utrack_id
+        utrack_id1: this.utrack_id1,
+        utrack_id2: this.utrack_id2,
+        utrack_id3: this.utrack_id3,
+        utrack_id4: this.utrack_id4,
+        utrack_id5: this.utrack_id5
       });
 
       // Redirect after save
       release.$save(function (response) {
+
         $location.path('releases/' + response._id);
 
         // Clear form fields
@@ -79,35 +98,3 @@ angular.module('releases').controller('ReleasesController', ['$scope', '$statePa
     };
   }
 ])
-.directive('capitalize', function() {
-   return {
-     require: 'ngModel',
-     link: function(scope, element, attrs, modelCtrl) {
-        var capitalize = function(inputValue) {
-           if(inputValue === undefined) inputValue = '';
-           var capitalized = inputValue.toUpperCase();
-           if(capitalized !== inputValue) {
-              modelCtrl.$setViewValue(capitalized);
-              modelCtrl.$render();
-            }
-            return capitalized;
-         };
-         modelCtrl.$parsers.push(capitalize);
-         capitalize(scope[attrs.ngModel]);  // capitalize initial value
-     }
-   };
-})
-.filter('makeCaps',function(){
-
-  return function(input){
-
-   var capsInput = input.split(' '),
-       newInput = [];
-
-   angular.forEach(capsInput,function(val,index){
-    newInput.push(val.substr(0,1).toUpperCase()+val.substr(1));
-  });
-    return newInput.join(' ');
-  };
-
-});

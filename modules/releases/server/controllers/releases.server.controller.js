@@ -8,9 +8,61 @@ var path = require('path'),
   Release = mongoose.model('Release'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
-var Client = require('node-rest-client').Client;
+var gitlab = require('gitlab')({
+  url:   'http://nest.klipfolio.com',
+  token: 'zUEzyyjGdvb_Fyzda-tA'
+});
+
+var SlackBot = require('slackbots');
+
+var port = 3030;
+var channel = "hackday"
+
+var bot = new SlackBot({
+    token: 'xoxb-11660487557-claMDxXFYT94TEMSpxQH8lsI', // Add a bot https://my.slack.com/services/new/bot and put the token
+    name: 'Ratchet'
+});
+// var Connection = require('youtrack-rest-node-library');
+//
+// var youtrack = new Connection('http://medlab:11000/');
+// utrack_auth_string = "'" + process.env.UTRACK_USER + ',' + process.env.UTRACK_PASSWORD + "'";
+// youtrack.login(utrack_auth_string, function(err){
+//     youtrack.getProject('Development', function(err, project){
+//     })
+// })
+
+
+// var Connection = require('youtrack-rest-node-library');
+//
+// var youtrack = new Connection('http://medlab:11000/');
+// utrack_auth_string = "'" + process.env.UTRACK_USER + ',' + process.env.UTRACK_PASSWORD + "'";
+// youtrack.login(utrack_auth_string, function(err){
+//     youtrack.getProject('Development', function(err, project){
+//     })
+// })
+
+
+
+
+// // TODO: need defer and promise to link together all the projects
+// function collectMR(projectId, projectName, mr_array) {
+//   var webui_branch_names = [];
+//   var webui_branch_messages = [];
+//   gitlab.projects.merge_requests.list(projectId, function(mrs) {
+//     for (var i = 0; i < mrs.length; i++) {
+//       if (mrs[i].title.indexOf(target_saas_id) > -1) {
+//         var mr_link = "http://nest.klipfolio.com/saas/" + projectName + "/merge_requests/" + mrs[i].iid
+//         console.log("#"+target_saas_id+" -- " + mr_link)
+//         mr_array.push(mr_link)
+//       }
+//     }
+//   });
+// };
 
 var DEFAULT_EXPIRE_MIN = 60;
+var utrack_user =     process.env.GITLAB_USER
+var utrack_pass =     process.env.GITLAB_PASS
+var projectName =     "saas-webui"
 
 function dateAdd(date, interval, units) {
   var ret = new Date(date); //don't change original date
@@ -27,6 +79,13 @@ function dateAdd(date, interval, units) {
   }
   return ret;
 }
+//
+//
+// exports.slackMsg = function (req, res, next, id) {
+//   console.log(id);
+//   console.log("slackMsg");
+// };
+
 
 /**
  * Create a release
@@ -35,61 +94,27 @@ exports.create = function (req, res) {
   var release = new Release(req.body);
   release.user = req.user;
 
-
-  // need tc data call here
-  // URLLIB CODE HERE
-  console.log("[server] triggering urllib on release creation");
-  console.log("[server] ASKING TC FOR DATA (FAKE)");
-  var tc = {ip: '192.168.1.1', fqdn: "super.klipfolio.com"};
-
-  if (release.release_name && release.force) {
-    console.log('BLOW AWAY VM AND REUSE');
-  } else {
-    var full_release_list = ['docker1', 'docker2', 'docker3', 'docker4', 'docker5', 'docker6', 'docker7', 'docker8', 'docker9', 'docker10']; // master list
-    Release.find({ release_name: { $in: full_release_list } }).exec(function (err, releases) {
-      if (err) {
-        console.log("ERROR");
+  var mr_array = []
+  gitlab.projects.merge_requests.list(19, function(mrs) {
+    for (var i = 0; i < mrs.length; i++) {
+      if (mrs[i].title.indexOf(release.utrack_id1) > -1) {
+        var mr_link = "http://nest.klipfolio.com/saas/" + projectName + "/merge_requests/" + mrs[i].iid
+        console.log("#"+release.utrack_id1+" -- " + mr_link)
+        mr_array.push(mr_link)
       }
-      else {
-        var existing_release_list = [];
-        releases.forEach(function(item) {
-          existing_release_list.push(item.release_name);
+    }
+    release.save(function (err) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
         });
-        console.log("existing_releases: " + existing_release_list);
-        var usable_release_list = full_release_list.filter( function( el ) {
-          return existing_release_list.indexOf( el ) < 0;
-        });
-        console.log("usable releases: " + usable_release_list);
-
-        if (usable_release_list.length === 0) {
-          // Nothing Free
-          console.log("NO VMS ARE AVAILABLE");
-        }
-        else {
-          var d = new Date();
-          var expire = release.expire ? dateAdd(d, 'minute', release.expire) : dateAdd(d, 'minute', DEFAULT_EXPIRE_MIN);
-          console.log("expire mins: " + release.expire);
-          release.release_name = usable_release_list[0];
-          release.expire = expire;
-          release.ip = tc.ip;
-          release.fqdn = tc.fqdn;
-          console.log("USING VM: " + release.release_name);
-          release.save(function (err) {
-            if (err) {
-              return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-              });
-            } else {
-              res.json(release);
-            }
-          });
-        }
+      } else {
+        console.log(mr_array)
+        release.mr_links = mr_array;
+        res.json(release);
       }
     });
-  }
-
-
-
+  });
 };
 
 /**
@@ -107,6 +132,13 @@ exports.update = function (req, res) {
 
   release.title = req.body.title;
   release.content = req.body.content;
+
+  if (req.body.slack == "1") {
+    console.log("SLACK TIME");
+    bot.postMessageToChannel("hackday", 'Release on *Canary*: \nFor release notes see: ' + "http://192.168.1.89:3000/releases/" + req.body._id);
+    return res.status(200).send({});
+    res.json(release);
+  }
 
   release.save(function (err) {
     if (err) {

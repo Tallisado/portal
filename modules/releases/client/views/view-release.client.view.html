@@ -1,6 +1,7 @@
 <section ng-controller="ReleasesController" ng-init="findOne()">
   <div class="page-header">
-    <h1 ng-bind="release.title"></h1>
+    <!-- <h1 ng-bind="release.title">Release Notes v1.2.0c</h1> -->
+    <h1>Release Notes v1.2.0c</h1>
   </div>
   <div class="pull-right" ng-show="authentication.user._id == release.user._id">
     <a class="btn btn-primary" ui-sref="releases.edit({releaseId: release._id})">
@@ -11,26 +12,41 @@
     </a>
   </div>
   <small>
-    <em class="text-muted">
-      Posted on 
-      <span ng-bind="release.created | date:'mediumDate'"></span>
-      by
-      <span ng-bind="release.user.displayName"></span>
-    </em>
-    <p class="list-group-item-heading" ng-bind="release.release_name"></p>
-    <p class="list-group-item-text" ng-bind="release.branchdc"></p>
-    <p class="list-group-item-text" ng-bind="release.branchdf"></p>
-    <p class="list-group-item-text" ng-bind="release.branchref"></p>
-    <p class="list-group-item-text" ng-bind="release.brancheval"></p>
-    <p class="list-group-item-text" ng-bind="release.branchdpn"></p>
-    <p class="list-group-item-text" ng-bind="release.branchwebui"></p>
 
+     <a href="http://medlab:11000/issue/saas-5648"> <h4 ng-bind="release.utrack_id1"> </h4></a>
+       Related merge requests: <br/>
+       WebUI MR: http://nest.klipfolio.com/saas/saas-webui/merge_requests/567 <br/>
+       WebUI Tests MR: http://nest.klipfolio.com/qa/saas-webui-testing/merge_requests/4 <br/>
+       API Tests MR: http://nest.klipfolio.com/qa/saas-api-testing/merge_requests/2 <br/>
+       PM-613 Lock Data Source (enable creation of MOz Gallery Klips) <br/>
+
+     <a href="http://medlab:11000/issue/saas-5648"> <h4 ng-bind="release.utrack_id1"> </h4></a>
+       Related merge requests: <br/>
+       WebUI MR: http://nest.klipfolio.com/saas/saas-webui/merge_requests/567 <br/>
+       WebUI Tests MR: http://nest.klipfolio.com/qa/saas-webui-testing/merge_requests/4 <br/>
+       API Tests MR: http://nest.klipfolio.com/qa/saas-api-testing/merge_requests/2 <br/>
+       PM-613 Lock Data Source (enable creation of MOz Gallery Klips) <br/>
+
+     <a href="http://medlab:11000/issue/saas-5648"> <h4 ng-bind="release.utrack_id1"> </h4></a>
+       Related merge requests: <br/>
+       WebUI MR: http://nest.klipfolio.com/saas/saas-webui/merge_requests/567 <br/>
+       WebUI Tests MR: http://nest.klipfolio.com/qa/saas-webui-testing/merge_requests/4 <br/>
+       API Tests MR: http://nest.klipfolio.com/qa/saas-api-testing/merge_requests/2 <br/>
+       PM-613 Lock Data Source (enable creation of MOz Gallery Klips) <br/>
+
+       <br/>
+       <em class="text-muted">
+         Posted on
+         <span ng-bind="release.created | date:'mediumDate'"></span>
+         by
+         <span ng-bind="release.user.displayName"></span>
+       </em> <br/>
     <div class="btn-group" data-toggle="buttons">
-      <label class="btn btn-success" ng-class="{'active':release.release_status==1}" >
-        <input type="radio" ng-value=1 ng-model="release.release_status"> Deployed <span class="glyphicon glyphicon-file"></span>
+      <label class="btn btn-success" >
+        <input ng-click="slackMessage('canary')" type="radio" ng-value=1 ng-model="release.release_status"> Canary <span class="glyphicon glyphicon-file"></span>
       </label>
       <label class="btn btn-success" ng-class="{'active':release.release_status==2}" ng-init="{'active':release_status==2}">
-        <input type="radio" ng-value=2 ng-model="release.release_status"> Tested <span class="glyphicon glyphicon-adjust"></span>
+        <input type="radio" ng-value=2 ng-model="release.release_status"> Production <span class="glyphicon glyphicon-adjust"></span>
       </label>
       <label class="btn btn-success" ng-class="{'active':release.release_status==3}" >
         <input type="radio" ng-value=3 ng-model="release.release_status"> Ready <span class="glyphicon glyphicon-light"></span>

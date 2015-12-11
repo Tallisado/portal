@@ -6,11 +6,23 @@
     <form name="releaseForm" class="form-horizontal" ng-submit="create(releaseForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
-          <label for="utrack_id">uTrack ID</label>
-          <input name="utrack_id" type="text" ng-model="utrack_id" id="utrack_id" class="form-control" placeholder="uTrack ID" required>
-          <div ng-messages="utrack_id.release_name.$error" role="alert">
+          <label for="utrack_id1">uTrack ID 1</label>
+          <input name="utrack_id1" type="text" ng-model="utrack_id1" id="utrack_id1" class="form-control" placeholder="uTrack ID" required>
+          <div ng-messages="utrack_id1.release_name.$error" role="alert">
             <p class="help-block error-text" ng-message="required">ID name is required.</p>
           </div>
+
+          <label for="utrack_id2">uTrack ID 2</label>
+          <input name="utrack_id2" type="text" ng-model="utrack_id2" id="utrack_id2" class="form-control" placeholder="uTrack ID">
+
+          <label for="utrack_id3">uTrack ID 3</label>
+          <input name="utrack_id3" type="text" ng-model="utrack_id3" id="utrack_id3" class="form-control" placeholder="uTrack ID">
+
+          <label for="utrack_id4">uTrack ID 4</label>
+          <input name="utrack_id4" type="text" ng-model="utrack_id4" id="utrack_id4" class="form-control" placeholder="uTrack ID">
+
+          <label for="utrack_id5">uTrack ID 5</label>
+          <input name="utrack_id5" type="text" ng-model="utrack_id5" id="utrack_id5" class="form-control" placeholder="uTrack ID">
         </div>
 
         <div class="form-group">

@@ -20,25 +20,29 @@ var ReleaseSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  utrack_id: {
-    type: String,
+  utrack_id1: {
+    type: Number,
     required: 'uTrack ID cannot be blank'
   },
-  utrack_url: {
-    type: String,
-    default: ''
+  utrack_id2: {
+    type: Number,
+    default: 0
   },
-  utrack_name: {
-    type: String,
-    default: ''
+  utrack_id3: {
+    type: Number,
+    default: 0
   },
-  git_merge_url: {
-    type: String,
-    default: ''
+  utrack_id4: {
+    type: Number,
+    default: 0
   },
-  git_branch_url: {
-    type: String,
-    default: ''
+  utrack_id5: {
+    type: Number,
+    default: 0
+  },
+  mr_links: {
+    type: Array,
+    default: []
   },
   user: {
     type: Schema.ObjectId,

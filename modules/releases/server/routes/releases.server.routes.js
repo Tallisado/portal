@@ -17,6 +17,9 @@ module.exports = function (app) {
     .get(releases.read)
     .put(releases.update)
     .delete(releases.delete);
+    // Single release routes
+  // app.route('/api/releases/slack').all(releasesPolicy.isAllowed)
+  //   .post(releases.slackMsg);
 
   // Finish by binding the release middleware
   app.param('releaseId', releases.releaseByID);
