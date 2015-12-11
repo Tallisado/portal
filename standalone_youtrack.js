@@ -72,8 +72,8 @@ var cookie = ''
 
 rest.post('http://medlab:11000/rest/user/login', {
   data: {
-    login: 'tvanek@klipfolio.com',
-    password: 'Zxvf1234'
+    login: process.env.UTRACK_USER,
+    password: process.env.UTRACK_PASS,
   },
 }).on('complete', function(data, response) {
   console.log(data);
@@ -88,15 +88,11 @@ rest.post('http://medlab:11000/rest/user/login', {
   // console.log(cookies);
 
   rest.get('http://medlab:11000/rest/admin/project', {
+    data : { projectId : "Development"},
     headers : { cookie : cookie }
   }).on('complete', function(response) {
     console.log('Restler received a response:', response);
     process.exit(0);
   });
-  });
-//
-//
-// var jsonData = { login: 'tvanek@klipfolio.com', password: 'Zxvf1234' };
-// rest.postJson('http://medlab:11000/rest/user/login', jsonData).on('complete', function(data, response) {
-//     console.log(data);
-// });
+});
+/
