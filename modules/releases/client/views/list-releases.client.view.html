@@ -1,0 +1,29 @@
+<section ng-controller="ReleasesController" ng-init="find()">
+  <div class="page-header">
+    <h1>Releases</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="release in releases" ui-sref="releases.view({releaseId: release._id})" class="list-group-item">
+
+      <div class="col-md-12">
+        <h3 ng-bind="release.release_name | uppercase" style="text-transform:capitalize"></h3>
+
+
+
+
+        <div class="row" ng-class="{hidden:release.saas_id == ''}">
+          <div class="row col-sm-offset-1 col-sm-2">SAAS-ID</div><div class="col-sm-3" style="" ng-bind="release.saas_id" ><span class="pull-right"></span></div>
+
+        </div>
+        <div class="row" ng-class="{hidden:release.saas_id == ''}">
+          <div class="row col-sm-offset-1 col-sm-2">Expires: </div><div class="col-sm-4" style="" ng-bind="release.expire | date:'medium'" ></div>
+            <span  class="label label-primary label-pill pull-right">LOADING</span>
+        </div>
+
+      </div>
+</a>
+</div>
+<div class="alert alert-warning text-center" ng-if="releases.$resolved && !releases.length">
+  No releases yet, why don't you <a ui-sref="releases.create">create one</a>?
+</div>
+</section>

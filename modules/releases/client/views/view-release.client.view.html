@@ -1,0 +1,42 @@
+<section ng-controller="ReleasesController" ng-init="findOne()">
+  <div class="page-header">
+    <h1 ng-bind="release.title"></h1>
+  </div>
+  <div class="pull-right" ng-show="authentication.user._id == release.user._id">
+    <a class="btn btn-primary" ui-sref="releases.edit({releaseId: release._id})">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn btn-primary" ng-click="remove();">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <small>
+    <em class="text-muted">
+      Posted on 
+      <span ng-bind="release.created | date:'mediumDate'"></span>
+      by
+      <span ng-bind="release.user.displayName"></span>
+    </em>
+    <p class="list-group-item-heading" ng-bind="release.release_name"></p>
+    <p class="list-group-item-text" ng-bind="release.branchdc"></p>
+    <p class="list-group-item-text" ng-bind="release.branchdf"></p>
+    <p class="list-group-item-text" ng-bind="release.branchref"></p>
+    <p class="list-group-item-text" ng-bind="release.brancheval"></p>
+    <p class="list-group-item-text" ng-bind="release.branchdpn"></p>
+    <p class="list-group-item-text" ng-bind="release.branchwebui"></p>
+
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-success" ng-class="{'active':release.release_status==1}" >
+        <input type="radio" ng-value=1 ng-model="release.release_status"> Deployed <span class="glyphicon glyphicon-file"></span>
+      </label>
+      <label class="btn btn-success" ng-class="{'active':release.release_status==2}" ng-init="{'active':release_status==2}">
+        <input type="radio" ng-value=2 ng-model="release.release_status"> Tested <span class="glyphicon glyphicon-adjust"></span>
+      </label>
+      <label class="btn btn-success" ng-class="{'active':release.release_status==3}" >
+        <input type="radio" ng-value=3 ng-model="release.release_status"> Ready <span class="glyphicon glyphicon-light"></span>
+      </label>
+    </div>
+    <br/><br/> debug:: Selected Item: <b>{{release.release_status}}</b>
+  </small>
+  <p class="lead" ng-bind="release.content"></p>
+</section>
