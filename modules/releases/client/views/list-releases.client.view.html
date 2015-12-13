@@ -5,18 +5,21 @@
   <div class="list-group">
     <a ng-repeat="release in releases" ui-sref="releases.view({releaseId: release._id})" class="list-group-item">
 
-        <h3 ng-bind="release.release_name | uppercase" style="text-transform:capitalize"></h3>
 
-
-
+        <h4>Release v1.{{10 | randomize}}.{{4 | randomize}}c</h4>
 
         <div class="row" ng-class="{hidden:release.saas_id == ''}">
-          <div class="row col-sm-offset-1 col-sm-2">SAAS-ID</div><div class="col-sm-3" style="" ng-bind="release.saas_id" ><span class="pull-right"></span></div>
-
+          <div class="row col-sm-offset-1 col-sm-2">SAAS-5555 </div><div class="col-sm-4" style="" ng-bind="release.expire | date:'medium'" ></div>
+            <span  class="label label-primary label-pill pull-right">{{26 | randomize}}</span> <span  class="label label-primary label-pill pull-right">Comments:</span>
         </div>
+
+        <div class="row">
+          <div class="row col-sm-offset-1 col-sm-2">SAAS-3573 </div><div class="col-sm-3" style="" ng-bind="release.saas_id" ><span class="pull-right"></span></div>
+        </div>
+
         <div class="row" ng-class="{hidden:release.saas_id == ''}">
-          <div class="row col-sm-offset-1 col-sm-2">Expires: </div><div class="col-sm-4" style="" ng-bind="release.expire | date:'medium'" ></div>
-            <span  class="label label-primary label-pill pull-right">LOADING</span>
+          <div class="row col-sm-offset-1 col-sm-4">Date: Monday, Dec. 14</div><div class="col-sm-4" style="" ng-bind="release.expire | date:'medium'" ></div>
+            <span  class="label label-success label-pill pull-right">{{2 | randomize}}</span> <span  class="label label-success label-pill pull-right">Thumbs</span>
         </div>
 
   </a>

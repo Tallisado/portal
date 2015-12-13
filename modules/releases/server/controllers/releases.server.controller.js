@@ -94,15 +94,23 @@ exports.create = function (req, res) {
   var release = new Release(req.body);
   release.user = req.user;
 
+  console.log("create in server release")
+
   var mr_array = []
+  console.log("git time in server release")
   gitlab.projects.merge_requests.list(19, function(mrs) {
+    //console.log(mrs)
     for (var i = 0; i < mrs.length; i++) {
+      // console.log("checking title for id");
+      //console.log(mrs[i].title + " " + release.utrack_id1);
       if (mrs[i].title.indexOf(release.utrack_id1) > -1) {
         var mr_link = "http://nest.klipfolio.com/saas/" + projectName + "/merge_requests/" + mrs[i].iid
         console.log("#"+release.utrack_id1+" -- " + mr_link)
+        console.log(mrs[i])
         mr_array.push(mr_link)
       }
     }
+    console.log("saving in server release")
     release.save(function (err) {
       if (err) {
         return res.status(400).send({
@@ -115,6 +123,7 @@ exports.create = function (req, res) {
       }
     });
   });
+  console.log("end of create in server release")
 };
 
 /**
@@ -132,10 +141,15 @@ exports.update = function (req, res) {
 
   release.title = req.body.title;
   release.content = req.body.content;
-
+  //
   if (req.body.slack == "1") {
-    console.log("SLACK TIME");
-    bot.postMessageToChannel("hackday", 'Release on *Canary*: \nFor release notes see: ' + "http://192.168.1.89:3000/releases/" + req.body._id);
+    console.log("SLACK TIME : canary");
+    bot.postMessageToChannel("testrelease", 'Release on *Canary* (http://app.klipfolio.com): \nFor release notes see: ' + "http://192.168.1.89:3000/releases/" + req.body._id);
+    return res.status(200).send({});
+    res.json(release);
+  } else if (req.body.slack == "2"){
+    console.log("SLACK TIME : production ");
+    bot.postMessageToChannel("testrelease", 'Release on *Production* (http://app.klipfolio.com): \nFor release notes see: ' + "http://192.168.1.89:3000/releases/" + req.body._id);
     return res.status(200).send({});
     res.json(release);
   }

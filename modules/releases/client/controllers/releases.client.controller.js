@@ -5,10 +5,28 @@ angular.module('releases').controller('ReleasesController', ['$scope', '$statePa
   function ($scope, $stateParams, $location, Authentication, Releases) {
     $scope.authentication = Authentication;
 
-    $scope.slackMessage = function () {
+    $scope.getRandomSpan = function(){
+      return Math.floor((Math.random()*6)+1);
+    }
+
+
+    $scope.slackMessageCanary = function () {
       console.log('client slackMessage');
       var release = $scope.release;
       release.slack = "1";
+      //console.log(release);
+
+      release.$update(function () {
+        console.log("BACK IN CLIENT");
+        //$location.path('releases/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    $scope.slackMessageProduction = function () {
+      console.log('client slackMessage');
+      var release = $scope.release;
+      release.slack = "2";
       //console.log(release);
 
       release.$update(function () {
@@ -22,6 +40,8 @@ angular.module('releases').controller('ReleasesController', ['$scope', '$statePa
     // Create new Release
     $scope.create = function (isValid) {
       $scope.error = null;
+
+      console.log("create in client release")
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'releaseForm');
@@ -37,14 +57,19 @@ angular.module('releases').controller('ReleasesController', ['$scope', '$statePa
         utrack_id5: this.utrack_id5
       });
 
+
       // Redirect after save
       release.$save(function (response) {
+        console.log("save in client release")
 
         $location.path('releases/' + response._id);
 
         // Clear form fields
         $scope.release_name = '';
       }, function (errorResponse) {
+        console.log("error in client release")
+        console.log(errorResponse)
+
         $scope.error = errorResponse.data.message;
       });
     };
@@ -98,3 +123,10 @@ angular.module('releases').controller('ReleasesController', ['$scope', '$statePa
     };
   }
 ])
+.filter('randomize', function() {
+  return function(input, scope) {
+    if (input!=null && input!=undefined && input > 1) {
+      return Math.floor((Math.random()*input)+1);
+    }
+  }
+});
