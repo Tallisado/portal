@@ -7,25 +7,55 @@ var gitlab = require('gitlab')({
 });
 var Q = require("q");
 
+function getMergeRequests() {
+  var deffered = Q.defer();
+  gitlab.projects.merge_requests.list(19, function(mrs) {
+    console.log("1|"+mrs[0].title)
+    // console.log("1|"+value)
+    //return mrs[0].title;
+    deffered.resolve( mrs[0].title )
+  })
+  return deffered.promise;
+}
 
 
-    gitlab.projects.merge_requests.list(19, function(mrs) {
-      console.log("|"+mrs[0].title)
-      console.log("|"+value)
-      //return Q(mrs[0].title);
-    }).then(function (data) {
-      gitlab.projects.merge_requests.list(19, function(mrs) {
-        console.log("2|"+mrs[0].title)
-        console.log("2|"+value)
-        //return Q(mrs[0].title);
-      });
-    }).then(function (data) {
-      gitlab.projects.merge_requests.list(19, function(mrs) {
-        console.log("3|"+mrs[0].title)
-        console.log("3|"+value)
-        //return Q(mrs[0].title);
-      });
-    });
+
+var promise = getMergeRequests();
+promise.then(function(data) { console.log("LAST ALWAYS: " + data); }
+);
+    // Q.fcall(gitlab.projects.merge_requests.list(19, function(mrs) {
+    //   console.log("1|"+mrs[0].title)
+    //   // console.log("1|"+value)
+    //   //return mrs[0].title;
+    //   return mrs[0].title;
+    //
+    // })).then(function(data) {
+    //   gitlab.projects.merge_requests.list(19, function(mrs) {
+    //     console.log("2|"+mrs[0].title)
+    //     // console.log("2|"+value)
+    //     return mrs[0].title;
+    //   })
+    // }).then(function(data) {
+    //   gitlab.projects.merge_requests.list(19, function(mrs) {
+    //     console.log("3|"+mrs[0].title)
+    //     // console.log("2|"+value)
+    //     return Q(mrs[0].title);
+    //   })
+    // }).then(function(data) {
+    //   gitlab.projects.merge_requests.list(19, function(mrs) {
+    //     console.log("4|"+mrs[0].title)
+    //     // console.log("2|"+value)
+    //     return Q(mrs[0].title);
+    //   })
+    // }).then(function(data) {
+    //   gitlab.projects.merge_requests.list(19, function(mrs) {
+    //     console.log("5|"+mrs[0].title)
+    //     // console.log("2|"+value)
+    //     return Q(mrs[0].title);
+    //   })
+    // }).fin(function () {
+    //   console.log("always LAST")
+    // });
 
       //return Q.delay(value, 1000);
 
