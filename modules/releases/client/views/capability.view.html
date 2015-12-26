@@ -3,16 +3,12 @@
     <h1>Releases Capability</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="release in releases" ui-sref="releases.view({releaseId: release._id})" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span ng-bind="release.created | date:'mediumDate'"></span>
-        by
-        <span ng-bind="release.user.displayName"></span>
-      </small>
-      <h4 class="list-group-item-heading" ng-bind="release.title"></h4>
-      <p class="list-group-item-text" ng-bind="release.content"></p>
-    </a>
+  <div class="list-group-item">
+    <a href="http://portal.klipfolio.com:3000"> WebUI-01 Logs </a>
+  </div>
+  <div class="list-group-item">
+    <a href="http://portal.klipfolio.com:3000"> WebUI-01 Logs </a>
+  </div>
   </div>
   <div class="alert alert-warning text-center" ng-if="releases.$resolved && !releases.length">
     No releases yet, why don't you <a ui-sref="releases.create">create one</a>?

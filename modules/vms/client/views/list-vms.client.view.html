@@ -1,0 +1,29 @@
+<section ng-controller="VmsController" ng-init="find()">
+  <div class="page-header">
+    <h1>Vms</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="vm in vms" ui-sref="vms.view({vmId: vm._id})" class="list-group-item">
+
+      <div class="col-md-12">
+        <h3 ng-bind="vm.vm_name | uppercase" style="text-transform:capitalize"></h3>
+
+
+
+
+        <div class="row" ng-class="{hidden:vm.saas_id == ''}">
+          <div class="row col-sm-offset-1 col-sm-2">SAAS-ID</div><div class="col-sm-3" style="" ng-bind="vm.saas_id" ><span class="pull-right"></span></div>
+
+        </div>
+        <div class="row" ng-class="{hidden:vm.saas_id == ''}">
+          <div class="row col-sm-offset-1 col-sm-2">Expires: </div><div class="col-sm-4" style="" ng-bind="vm.expire | date:'medium'" ></div>
+            <span  class="label label-primary label-pill pull-right">LOADING</span>
+        </div>
+
+      </div>
+</a>
+</div>
+<div class="alert alert-warning text-center" ng-if="vms.$resolved && !vms.length">
+  No vms yet, why don't you <a ui-sref="vms.create">create one</a>?
+</div>
+</section>

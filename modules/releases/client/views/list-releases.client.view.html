@@ -6,9 +6,9 @@
     <a ng-repeat="release in releases" ui-sref="releases.view({releaseId: release._id})" class="list-group-item">
 
 
-        <h4>Release v1.{{10 | randomize}}.{{4 | randomize}}c</h4>
+        <h4>Release {{release.version}}</h4>
 
-        <div class="row" ng-class="{hidden:release.saas_id == ''}">
+        <div class="row" ng-class="{hidden:release.utrack_id1 == ''}">
           <div class="row col-sm-offset-1 col-sm-2">SAAS-5555 </div><div class="col-sm-4" style="" ng-bind="release.expire | date:'medium'" ></div>
             <span  class="label label-primary label-pill pull-right">{{26 | randomize}}</span> <span  class="label label-primary label-pill pull-right">Comments:</span>
         </div>

@@ -1,0 +1,87 @@
+<section ng-controller="HarnessesController" ng-init="find()">
+  <div class="page-header">
+    <h1>Harnesses</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="harness in harnesses" ui-sref="harnesses.view({harnessId: harness._id})" class="list-group-item">
+
+      <div class="col-md-12">
+        <div class="pull-right">
+          <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-success pill-label" ng-class="{'active':harness.harness_status==1}">
+              <input type="radio" ng-value=1 ng-model="harness.harness_status"> Deployed
+            </label>
+            <label class="btn btn-success pill-label" ng-class="{'active':harness.harness_status==2}">
+              <input type="radio" ng-value=2 ng-model="harness.harness_status"> Tested <span class="glyphicon glyphicon-adjust"></span>
+            </label>
+            <label class="btn btn-success pill-label" ng-class="{'active':harness. harness_status==3}" >
+              <input type="radio" ng-value=3 ng-model="harness.harness_status"> Ready <span class="glyphicon glyphicon-light"></span>
+            </label>
+          </div>
+        </div>
+        <h3 ng-bind="harness.vm_name | uppercase" style="text-transform:capitalize"></h3>
+
+
+
+
+
+        <div class="row" ng-class="{hidden:harness.branchwebui == ''}">
+          <div class="row col-sm-offset-1 col-sm-4">WebUI</div><div class="col-sm-3" style="" ng-bind="harness.branchwebui" ><span class="pull-right"></span></div>
+            <span style="" class="label label-primary label-pill pull-right">GRADLE</span>
+            <span class="label label-primary label-pill pull-right">API</span>
+            <span  class="label label-primary label-pill pull-right">WEB</span>
+        </div>
+        <div class="row" ng-class="{hidden:harness.branchdc == ''}">
+          <div class="row col-sm-offset-1 col-sm-4">Data Connector</div><div class="col-sm-4" ng-bind="harness.branchdc" ><span class="pull-right">$42</span></div>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
+        </div>
+        <div class="row" ng-class="{hidden:harness.branchdf == ''}">
+          <div class="row col-sm-offset-1 col-sm-4">Data Formula</div><div class="col-sm-4" ng-bind="harness.branchdf" ><span class="pull-right">$42</span></div>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
+        </div>
+        <div class="row" ng-class="{hidden:harness.branchref == ''}">
+          <div class="row col-sm-offset-1 col-sm-4">Refresh</div><div class="col-sm-4" ng-bind="harness.branchref" ><span class="pull-right">$42</span></div>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
+        </div>
+        <div class="row" ng-class="{hidden:harness.branchdpn == ''}">
+          <div class="row col-sm-offset-1 col-sm-4">Data Provider</div><div class="col-sm-4" ng-bind="harness.branchdpn" ><span class="pull-right">$42</span></div>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
+        </div>
+        <div class="row" ng-class="{hidden:harness.brancheval == ''}">
+          <div class="row col-sm-offset-1 col-sm-4">Data Evaluator</div><div class="col-sm-4" ng-bind="harness.brancheval" ><span class="pull-right">$42</span></div>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
+            <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
+        </div>
+        <div class="row" ng-class="{hidden:harness.branchdc == ''}">
+          <div class="col-sm-3">DataConnector</div><div class="col-sm-4" ng-bind="harness.branchdc"><span class="pull-right">$42</span></div>
+        </div>
+        <div class="row" ng-class="{hidden:harness.branchref == ''}">
+          <div class="col-sm-3">Refresh</div><div class="col-sm-4" ng-bind="harness.branchref"><span class="pull-right">$42</span></div>
+        </div>
+        <div class="row" ng-class="{hidden:harness.branchdpn == ''}">
+          <div class="col-sm-3">DataProvider</div><div class="col-sm-4" ng-bind="harness.branchdpn"><span class="pull-right">$42</span></div>
+        </div>
+        <div class="row"ng-class="{hidden:harness.brancheval == ''}">
+          <div class="col-sm-3">Data Evaluator</div><div class="col-sm-4" ng-bind="harness.brancheval"><span class="pull-right">$42</span></div>
+        </div>
+
+        debug
+        <div class="row"ng-class="{hidden:false}">
+          <div class="col-sm-3">tc id build</div><div class="col-sm-4" ng-bind="harness.tc_build_id"><span class="pull-right">$42</span></div>
+        </div>
+      </div>
+</a>
+</div>
+<div class="alert alert-warning text-center" ng-if="harnesses.$resolved && !harnesses.length">
+  No harnesses yet, why don't you <a ui-sref="harnesses.create">create one</a>?
+</div>
+</section>

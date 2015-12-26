@@ -1,0 +1,42 @@
+<section ng-controller="VmsController" ng-init="findOne()">
+  <div class="page-header">
+    <h1 ng-bind="vm.title"></h1>
+  </div>
+  <div class="pull-right" ng-show="authentication.user._id == vm.user._id">
+    <a class="btn btn-primary" ui-sref="vms.edit({vmId: vm._id})">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn btn-primary" ng-click="remove();">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <small>
+    <em class="text-muted">
+      Posted on
+      <span ng-bind="vm.created | date:'mediumDate'"></span>
+      by
+      <span ng-bind="vm.user.displayName"></span>
+    </em>
+    <p class="list-group-item-heading" ng-bind="vm.vm_name"></p>
+    <p class="list-group-item-text" ng-bind="vm.branchdc"></p>
+    <p class="list-group-item-text" ng-bind="vm.branchdf"></p>
+    <p class="list-group-item-text" ng-bind="vm.branchref"></p>
+    <p class="list-group-item-text" ng-bind="vm.brancheval"></p>
+    <p class="list-group-item-text" ng-bind="vm.branchdpn"></p>
+    <p class="list-group-item-text" ng-bind="vm.branchwebui"></p>
+
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-success" ng-class="{'active':vm.vm_status==1}" >
+        <input type="radio" ng-value=1 ng-model="vm.vm_status"> Deployed <span class="glyphicon glyphicon-file"></span>
+      </label>
+      <label class="btn btn-success" ng-class="{'active':vm.vm_status==2}" ng-init="{'active':vm_status==2}">
+        <input type="radio" ng-value=2 ng-model="vm.vm_status"> Tested <span class="glyphicon glyphicon-adjust"></span>
+      </label>
+      <label class="btn btn-success" ng-class="{'active':vm.vm_status==3}" >
+        <input type="radio" ng-value=3 ng-model="vm.vm_status"> Ready <span class="glyphicon glyphicon-light"></span>
+      </label>
+    </div>
+    <br/><br/> debug:: Selected Item: <b>{{vm.vm_status}}</b>
+  </small>
+  <p class="lead" ng-bind="vm.content"></p>
+</section>

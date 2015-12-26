@@ -1,0 +1,20 @@
+<section ng-controller="HarnessesController" ng-init="find()">
+  <div class="page-header">
+    <h1>Harnesses Capability</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="harness in harnesses" ui-sref="harnesses.view({harnessId: harness._id})" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="harness.created | date:'mediumDate'"></span>
+        by
+        <span ng-bind="harness.user.displayName"></span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="harness.title"></h4>
+      <p class="list-group-item-text" ng-bind="harness.content"></p>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="harnesses.$resolved && !harnesses.length">
+    No harnesses yet, why don't you <a ui-sref="harnesses.create">create one</a>?
+  </div>
+</section>

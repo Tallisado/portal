@@ -1,7 +1,7 @@
 <section ng-controller="ReleasesController" ng-init="findOne()">
   <div class="page-header">
     <!-- <h1 ng-bind="release.title">Release Notes v1.2.0c</h1> -->
-    <h1>Release Notes v1.{{6 | randomize}}</h1> <h1 ng-bind=""></h1>
+    <h1>Release Notes {{release.utrack_id1}}</h1> <h1 ng-bind=""></h1>
   </div>
   <div class="pull-right" ng-show="authentication.user._id == release.user._id">
     <a class="btn btn-primary" ui-sref="releases.edit({releaseId: release._id})">
@@ -13,20 +13,31 @@
   </div>
   <small>
 
-     <a href="http://medlab:11000/issue/saas-{{release.utrack_id1}}"> <h4 ng-bind="'saas-' + (release.utrack_id1)"> </h4></a>
-       Related merge requests: <br/>
-       WebUI MR: http://nest.klipfolio.com/saas/saas-webui/merge_requests/567 <br/>
-       WebUI Tests MR: http://nest.klipfolio.com/qa/saas-webui-testing/merge_requests/4 <br/>
-       API Tests MR: http://nest.klipfolio.com/qa/saas-api-testing/merge_requests/2 <br/>
-       PM-613 Lock Data Source (enable creation of MOz Gallery Klips) <br/>
-
-     <a href="http://medlab:11000/issue/saas-5648"> <h4> saas-5648</h4></a>
-       Related merge requests: <br/>
-       WebUI Tests MR: http://nest.klipfolio.com/qa/saas-webui-testing/merge_requests/4 <br/>
-
-     <a href="http://medlab:11000/issue/saas-5648"> <h4> saas-5648</h4></a>
-       Related merge requests: <br/>
-       PM-613 Lock Data Source (enable creation of MOz Gallery Klips) <br/>
+  <span class="label pull-left label-primary">feature</span>
+  <a href="http://medlab:11000/issue/saas-{{release.utrack_id1}}">
+  <h4 ng-bind="'saas-' + (release.utrack_id1)"> </h4></a>
+  <div ng-bind="release.utrack_details1" href="http://medlab:11000/issue/saas-" + release.utrac>
+  </div>
+  <span class="label pull-left label-primary">feature</span>
+  <a href="http://medlab:11000/issue/saas-{{release.utrack_id2}}">
+  <h4 ng-bind="'saas-' + (release.utrack_id2)"> </h4></a>
+  <div ng-bind="release.utrack_details1" href="http://medlab:11000/issue/saas-" + release.utrac>
+  </div>
+  <span class="label pull-left label-primary">feature</span>
+  <a href="http://medlab:11000/issue/saas-{{release.utrack_id3}}">
+  <h4 ng-bind="'saas-' + (release.utrack_id3)"> </h4></a>
+  <div ng-bind="release.utrack_details1" href="http://medlab:11000/issue/saas-" + release.utrac>
+  </div>
+  <span class="label pull-left label-primary">feature</span>
+  <a href="http://medlab:11000/issue/saas-{{release.utrack_id4}}">
+  <h4 ng-bind="'saas-' + (release.utrack_id4)"> </h4></a>
+  <div ng-bind="release.utrack_details1" href="http://medlab:11000/issue/saas-" + release.utrac>
+  </div>
+  <span class="label pull-left label-primary">feature</span>
+  <a href="http://medlab:11000/issue/saas-{{release.utrack_id5}}">
+  <h4 ng-bind="'saas-' + (release.utrack_id5)"> </h4></a>
+  <div ng-bind="release.utrack_details1" href="http://medlab:11000/issue/saas-" + release.utrac>
+  </div>
 
        <br/>
        <em class="text-muted">
@@ -49,7 +60,7 @@
     <br/><br/>
     <br/><br/>
     <br/><br/>
-    <br/><br/> 
+    <br/><br/>
   </small>
   <p class="lead" ng-bind="release.content"></p>
 </section>

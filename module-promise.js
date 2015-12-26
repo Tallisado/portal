@@ -18,7 +18,16 @@ function getMergeRequests() {
   return deffered.promise;
 }
 
-
+function getMergeRequests() {
+  var deffered = Q.defer();
+  gitlab.projects.merge_requests.list(19, function(mrs) {
+    console.log("1|"+mrs[0].title)
+    // console.log("1|"+value)
+    //return mrs[0].title;
+    deffered.resolve( mrs[0].title )
+  })
+  return deffered.promise;
+}
 
 var promise = getMergeRequests();
 promise.then(function(data) { console.log("LAST ALWAYS: " + data); }

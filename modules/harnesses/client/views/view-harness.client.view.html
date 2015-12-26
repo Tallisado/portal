@@ -1,0 +1,45 @@
+<section ng-controller="HarnessesController" ng-init="refreshingFindOne()">
+  <div class="page-header">
+    <h1 ng-bind="harness.title"></h1>
+  </div>
+  <div class="pull-right" ng-show="authentication.user._id == harness.user._id">
+    <a class="btn btn-primary" ui-sref="harnesses.edit({harnessId: harness._id})">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn btn-primary" ng-click="remove();">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <small>
+    <em class="text-muted">
+      Posted on
+      <span ng-bind="harness.created | date:'mediumDate'"></span>
+      by
+      <span ng-bind="harness.user.displayName"></span>
+    </em>
+    <br/>
+    <br/>
+    {{harness.data.testmode}}
+    <br/>
+
+    <br/>
+
+    DEBUG:: Harness Testing: {{harness.data.testresults}}
+    DEBUG:: Harness Status: {{harness.harness_status}}
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-success" ng-class="{'active':harness.harness_status==0001}" >
+        <input type="radio" ng-value=1 ng-model="harness.harness_status"> Deploying <span class="glyphicon glyphicon-file"></span>
+      </label>
+      <label class="btn btn-success" ng-class="{'active':harness.harness_status==0010}" ng-init="{'active':harness_status==2}">
+        <input type="radio" ng-value=2 ng-model="harness.harness_status"> Deployed <span class="glyphicon glyphicon-adjust"></span>
+      </label>
+      <label class="btn pull-right btn-primary" ng-bind="harness.data.testresults.webui.p" ng-class="{'active':harness.harness_status==0100}" >
+      </label>
+
+
+
+    </div>
+    <br/><br/> debug:: Selected Item: <b>{{harness.harness_status}}</b>
+  </small>
+  <p class="lead" ng-bind="harness.content"></p>
+</section>

@@ -13,15 +13,15 @@ var gitlab = require('gitlab')({
   token: 'zUEzyyjGdvb_Fyzda-tA'
 });
 
-var SlackBot = require('slackbots');
+// var SlackBot = require('slackbots');
 
 var port = 3030;
 var channel = "hackday"
-
-var bot = new SlackBot({
-    token: 'xoxb-11660487557-claMDxXFYT94TEMSpxQH8lsI', // Add a bot https://my.slack.com/services/new/bot and put the token
-    name: 'Ratchet'
-});
+//
+// var bot = new SlackBot({
+//     token: 'xoxb-11660487557-claMDxXFYT94TEMSpxQH8lsI', // Add a bot https://my.slack.com/services/new/bot and put the token
+//     name: 'Ratchet'
+// });
 // var Connection = require('youtrack-rest-node-library');
 //
 // var youtrack = new Connection('http://medlab:11000/');
@@ -144,14 +144,14 @@ exports.update = function (req, res) {
   //
   if (req.body.slack == "1") {
     console.log("SLACK TIME : canary");
-    bot.postMessageToChannel("testrelease", 'Release on *Canary* (http://app.klipfolio.com): \nFor release notes see: ' + "http://192.168.1.89:3000/releases/" + req.body._id);
+    // bot.postMessageToChannel("testrelease", 'Release on *Canary* (http://app.klipfolio.com): \nFor release notes see: ' + "http://192.168.1.89:3000/releases/" + req.body._id);
     return res.status(200).send({});
-    res.json(release);
+    //res.json(release);
   } else if (req.body.slack == "2"){
     console.log("SLACK TIME : production ");
-    bot.postMessageToChannel("testrelease", 'Release on *Production* (http://app.klipfolio.com): \nFor release notes see: ' + "http://192.168.1.89:3000/releases/" + req.body._id);
+    // bot.postMessageToChannel("testrelease", 'Release on *Production* (http://app.klipfolio.com): \nFor release notes see: ' + "http://192.168.1.89:3000/releases/" + req.body._id);
     return res.status(200).send({});
-    res.json(release);
+    //res.json(release);
   }
 
   release.save(function (err) {

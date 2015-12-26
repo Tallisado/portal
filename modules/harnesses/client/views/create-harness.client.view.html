@@ -1,0 +1,119 @@
+<section ng-controller="HarnessesController">
+  <div class="page-header">
+    <h1>New Harness</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="harnessForm" class="form-horizontal" ng-submit="create(harnessForm.$valid)" novalidate>
+
+        <div class="form-group">
+          <label for="name">Docker VM</label>
+          <br/>
+          <div class="btn-group" dropdown keyboard-nav>
+              <button id="vm_name" ng-bind="vm_name" type="button" class="btn btn-primary" ng-init="vm_name = 'docker1'" dropdown-toggle>
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav" ng-init="">
+                <li ng-repeat="a in vm_names"><a ng-click="$parent.vm_name = a">{{a}}</a></li>
+              </ul>
+              {{vm_name}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input name="expire" type="text" ng-model="expire" id="expire" class="form-control" placeholder="Expire">
+        </div>
+
+        <div class="col-md-6">
+          {{branch_list}}
+          <div class="form-group">
+            <label for="description">Expression Evaluator</label>
+            <input name="ee" type="text" ng-model="branch_list.ee.branch" id="wu" class="form-control" placeholder={{branch_list.ee.pegged}}>
+          </div>
+          <div class="form-group">
+            <label for="description">Data Connector</label>
+            <input name="dc" type="text" ng-model="branch_list.dc.branch" id="dc" class="form-control" placeholder="{{branch_list.dc.pegged}}">
+          </div>
+          <div class="form-group">
+            <label for="description">Data Formula</label>
+            <input name="df" type="text" ng-model="branch_list.df.branch" id="df" class="form-control" placeholder="{{branch_list.df.pegged}}">
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="description">WebUI</label>
+            <input name="wu" type="text" ng-model="branch_list.wu.branch" id="wu" class="form-control" placeholder={{branch_list.wu.pegged}}>
+          </div>
+          <div class="form-group">
+            <label for="description">Refresh</label>
+            <input name="rf" type="text" ng-model="branch_list.rf.branch" id="rf" class="form-control" placeholder={{branch_list.rf.pegged}}>
+          </div>
+          <div class="form-group">
+            <label for="description">Data Provider</label>
+            <input name="dp" type="text" ng-model="branch_list.dp.branch" id="dp" class="form-control" placeholder={{branch_list.dp.pegged}}>
+          </div>
+        </div>
+
+
+
+
+
+
+        <!-- TESTING -->
+        <div class="form-group">
+          <label for="tests">Testing</label>
+          <br/>
+          <button type="button" class="btn btn-warning btn-sm" ng-click="disable_tests = !disable_tests">Enable/Disable</button>
+          <!-- Single button -->
+          <div class="btn-group" dropdown >
+            <!-- <button id="name" ng-init="name = 'None'" ng-bind="name" type="button" class="btn btn-primary" dropdown-toggle ng-disabled="disable_tests"> -->
+            <button id="name" ng-model="data.testmode.name" type="button" class="btn btn-primary" dropdown-toggle ng-disabled="disable_tests">
+              {{data.testmode.name}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+              <li ng-repeat="a in test_modes"><a ng-click="$parent.data.testmode.name = a">{{a}}</a></li>
+            </ul>
+          <!-- <button type="button" class="btn btn-default" ng-click="c2Show = !c2Show">?</button> -->
+
+          <br/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h4>Expires</h4>
+          <div style="display:inline-block; min-height:290px;">
+            <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></datepicker>
+            <button type="button" class="btn btn-sm btn-default" ng-click="toggleHour()" tooltip="Shortest Reservation">One Hour</button>
+          </div>
+          <pre>Selected date is: <em>{{dt | date:'medium' }}</em></pre>
+        </div>
+
+        <div class="form-group">
+          <input type="submit" class="btn btn-default">
+        </div>
+        <div ng-show="error" class="text-danger">
+          <strong ng-bind="error"></strong>
+        </div>
+<!--
+      <button type="button" class="btn btn-default" ng-click="c1Show = !c1Show">Branches</button>
+      <button type="button" class="btn btn-default" ng-click="c3Show = !c3Show">TeamCity</button>
+      <button type="button" class="btn btn-default" ng-click="c4Show = !c4Show">News</button>
+
+
+    	<div ng-show="c1Show">
+    		<div class="well well-lg">Some content</div>
+    	</div>
+      <div ng-show="c2Show">
+        <div class="well well-lg">Some content</div>
+      </div>
+    	<div ng-show="c3Show">
+    		<div class="well well-lg">Some content</div>
+    	</div>
+    	<div ng-show="c4Show">
+    		<div class="well well-lg">Some content</div>
+    	</div> -->
+    </form>
+  </div>
+</section>
