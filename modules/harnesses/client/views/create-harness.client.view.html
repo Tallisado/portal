@@ -21,11 +21,15 @@
 
         <div class="form-group">
           <label for="description">Description</label>
-          <input name="expire" type="text" ng-model="expire" id="expire" class="form-control" placeholder="Expire">
+          <input name="description" type="text" ng-model="description" id="description" class="form-control" placeholder="Meta data about the harness">
+        </div>
+
+      </br>
+        <div class="form-group">
+          <label for="Branches">Branch Selection </label>
         </div>
 
         <div class="col-md-6">
-          {{branch_list}}
           <div class="form-group">
             <label for="description">Expression Evaluator</label>
             <input name="ee" type="text" ng-model="branch_list.ee.branch" id="wu" class="form-control" placeholder={{branch_list.ee.pegged}}>
@@ -84,10 +88,12 @@
         <div class="form-group">
           <h4>Expires</h4>
           <div style="display:inline-block; min-height:290px;">
-            <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></datepicker>
-            <button type="button" class="btn btn-sm btn-default" ng-click="toggleHour()" tooltip="Shortest Reservation">One Hour</button>
+            <datepicker ng-model="expire" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></datepicker>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="toggleOneDay()" tooltip="Shortest Reservation">Automated Tests Duration</button>
+            <button type="button" class="btn btn-sm btn-info" ng-click="toggleOneDay()" tooltip="Shortest Reservation">One Hour</button>
+            <button type="button" class="btn btn-sm btn-info" ng-click="toggleOneDay()" tooltip="Shortest Reservation">One Day</button>
           </div>
-          <pre>Selected date is: <em>{{dt | date:'medium' }}</em></pre>
+          <pre>Selected date is: <em>{{expire | date:'medium' }}</em></pre>
         </div>
 
         <div class="form-group">
@@ -115,5 +121,8 @@
     		<div class="well well-lg">Some content</div>
     	</div> -->
     </form>
+
+
+    {{branch_list}}
   </div>
 </section>

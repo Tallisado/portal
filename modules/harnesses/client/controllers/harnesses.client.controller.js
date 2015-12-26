@@ -1,8 +1,8 @@
 'use strict';
 
 // Harnesses controller
-angular.module('harnesses').controller('HarnessesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Harnesses',
-  function ($scope, $stateParams, $location, Authentication, Harnesses) {
+angular.module('harnesses').controller('HarnessesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Harnesses', 'Vms',
+  function ($scope, $stateParams, $location, Authentication, Harnesses, Vms) {
     $scope.authentication = Authentication;
 
     $scope.disable_tests = true;
@@ -48,12 +48,12 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
     ];
 
     $scope.today = function() {
-        $scope.dt = new Date();
+        $scope.expire = new Date();
     };
     $scope.today();
 
     $scope.clear = function () {
-      $scope.dt = null;
+      $scope.expire = null;
     };
 
     // Disable weekend selection
@@ -72,7 +72,11 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
     };
 
     $scope.setDate = function(year, month, day) {
-      $scope.dt = new Date(year, month, day);
+      $scope.expire = new Date(year, month, day);
+    };
+
+    $scope.toggleOneDay = function() {
+      $scope.expire = new Date().setDate(new Date().getDate() + 1);
     };
 
     $scope.dateOptions = {
@@ -142,15 +146,34 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
         return false;
       }
 
-
       // Create new Harness object
       var harness = new Harnesses({
         vm_name: this.vm_name,
         branches: $scope.branch_list,
-        expire: this.expire,
         data: $scope.data
         // tc_build_id: this.tc_build_id   (ADDED BY REFRESH)
       });
+
+
+      // Create new Vm object
+      var vm = new Vms({
+        vm_name: this.vm_name,
+        expire: this.expire,
+        // owner: this.owner,
+        force: false,
+        loaded: false
+      });
+
+      // Redirect after save
+      vm.$save(function (response) {
+        // $location.path('vms/' + response._id);
+        //
+        // // Clear form fields
+        // $scope.vm_name = '';
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+
 
       // Redirect after save
       harness.$save(function (response) {

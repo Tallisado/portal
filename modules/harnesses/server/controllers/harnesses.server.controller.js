@@ -21,6 +21,7 @@ exports.create = function (req, res) {
   // need tc data call here
   // URLLIB CODE HERE
   console.log("[server] triggering urllib on harness creation");
+  console.log(harness);
 
   harness.save(function (err) {
     if (err) {
