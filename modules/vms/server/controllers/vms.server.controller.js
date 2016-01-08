@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Vm = mongoose.model('Vm'),
+  Harness = mongoose.model('Harness'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 var Client =  require('node-rest-client').Client;
@@ -34,59 +35,79 @@ function dateAdd(date, interval, units) {
 exports.create = function (req, res) {
   var vm = new Vm(req.body);
   vm.user = req.user;
+  var harness = new Harness(req.body);
+  harness.user = req.user;
 
 
-  // need tc data call here
-  // URLLIB CODE HERE
-  console.log("[server] triggering urllib on vm creation");
-  console.log("[server] ASKING TC FOR DATA (FAKE)");
+  var masterVMList = [
+    'docker1',
+    'docker2',
+    'docker3',
+    'docker4',
+    'docker5',
+    'docker6',
+    'docker7',
+    'docker8',
+    'docker9',
+    'docker10'
+  ]; // master list
+
   var tc = {ip: '192.168.1.1', fqdn: "super.klipfolio.com"};
 
-  if (vm.vm_name && vm.force) {
-    console.log('BLOW AWAY VM AND REUSE')
-  } else {
-    var full_vm_list = ['docker1', 'docker2', 'docker3', 'docker4', 'docker5', 'docker6', 'docker7', 'docker8', 'docker9', 'docker10']; // master list
-    Vm.find({ vm_name: { $in: full_vm_list } }).exec(function (err, vms) {
-      if (err) {
-        console.log("ERROR")
+  Vm.find({ name : { $in: masterVMList } }).exec(function (err, takenVmList) {
+    if (err) {
+      console.log("ERROR FINDING availableVmList")
+    }
+    else {
+      var existing_vm_list = []
+      takenVmList.forEach(function(item) {
+        existing_vm_list.push(item.name);
+      })
+      console.log("existing_vms: " + existing_vm_list);
+      var usable_vm_list = masterVMList.filter( function( el ) {
+        return existing_vm_list.indexOf( el ) < 0;
+      } );
+      console.log("usable vms: " + usable_vm_list);
+
+      if (usable_vm_list.length == 0) {
+        // Nothing Free
+        console.log("NO VMS ARE AVAILABLE");
       }
       else {
-        var existing_vm_list = []
-        vms.forEach(function(item) {
-          existing_vm_list.push(item.vm_name);
-        })
-        console.log("existing_vms: " + existing_vm_list);
-        var usable_vm_list = full_vm_list.filter( function( el ) {
-          return existing_vm_list.indexOf( el ) < 0;
-        } );
-        console.log("usable vms: " + usable_vm_list);
-
-        if (usable_vm_list.length == 0) {
-          // Nothing Free
-          console.log("NO VMS ARE AVAILABLE");
-        }
-        else {
-          var d = new Date;
-          var expire = vm.expire ? dateAdd(d, 'minute', vm.expire) : dateAdd(d, 'minute', DEFAULT_EXPIRE_MIN);
-          console.log("expire mins: " + vm.expire)
-          vm.vm_name = usable_vm_list[0];
-          vm.expire = expire;
-          vm.ip = tc.ip;
-          vm.fqdn = tc.fqdn;
-          console.log("USING VM: " + vm.vm_name)
-          vm.save(function (err) {
-            if (err) {
-              return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-              });
-            } else {
-              res.json(vm);
-            }
-          });
-        }
+        var d = new Date;
+        var expire = vm.expire ? dateAdd(d, 'minute', vm.expire) : dateAdd(d, 'minute', DEFAULT_EXPIRE_MIN);
+        console.log("expire mins: " + vm.expire)
+        console.log("VM ID: " + vm._id)
+        vm.name = usable_vm_list[0]; // availableVm.vm_name
+        harness.vm_name = usable_vm_list[0]; // availableVm.vm_name
+        harness.vm_id = vm._id // availableVm.vm_name
+        //vm.expire = vm.expire;
+        vm.ip = tc.ip;  // availableVm.ip
+        vm.fqdn = tc.fqdn; // availableVm.fqdn
+        console.log("USING VM: " + vm.name)
+        vm.save(function (err) {
+          if (err) {
+            return res.status(400).send({
+              message: errorHandler.getErrorMessage(err)
+            });
+          } else {
+            //res.json(vm);
+          }
+        });
+        console.log("HARNESS SAVING");
+        console.log(harness);
+        harness.save(function (err) {
+          if (err) {
+            return res.status(400).send({
+              message: errorHandler.getErrorMessage(err)
+            });
+          } else {
+            res.json(harness);
+          }
+        });
       }
-    });
-  }
+    }
+  });
 
 
 

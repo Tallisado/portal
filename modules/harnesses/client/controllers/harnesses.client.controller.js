@@ -149,7 +149,7 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
       // Create new Harness object
       var harness = new Harnesses({
         vm_name: this.vm_name,
-        branches: $scope.branch_list,
+
         data: $scope.data
         // tc_build_id: this.tc_build_id   (ADDED BY REFRESH)
       });
@@ -159,14 +159,26 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
       var vm = new Vms({
         vm_name: this.vm_name,
         expire: this.expire,
+        branches: $scope.branch_list,
+        data: $scope.data,
         // owner: this.owner,
         force: false,
         loaded: false
       });
 
+      // // Redirect after save
+      // harness.$save(function (response) {
+      //   // $location.path('vms/' + response._id);
+      //   //
+      //   // // Clear form fields
+      //   // $scope.vm_name = '';
+      // }, function (errorResponse) {
+      //   $scope.error = errorResponse.data.message;
+      // });
+      console.log("saving")
       // Redirect after save
       vm.$save(function (response) {
-        // $location.path('vms/' + response._id);
+        $location.path('harnesses/' + response._id);
         //
         // // Clear form fields
         // $scope.vm_name = '';
@@ -176,14 +188,7 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
 
 
       // Redirect after save
-      harness.$save(function (response) {
-        $location.path('harnesses/' + response._id);
 
-        // Clear form fields
-        $scope.vm_name = '';
-      }, function (errorResponse) {
-        $scope.error = errorResponse.data.message;
-      });
     };
 
     // Remove existing Harness

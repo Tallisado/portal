@@ -20,6 +20,9 @@ var HarnessSchema = new Schema({
     trim: true,
     required: 'Name cannot be blank'
   },
+  vm_id: {
+    type: Schema.ObjectId
+  },
   utrack_id: {
     type: String,
     default: '',

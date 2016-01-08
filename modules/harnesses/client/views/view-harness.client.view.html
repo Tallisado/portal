@@ -1,6 +1,6 @@
 <section ng-controller="HarnessesController" ng-init="refreshingFindOne()">
   <div class="page-header">
-    <h1 ng-bind="harness.title"></h1>
+    <a href="/vms/{{harness.vm_id}}"><h1 ng-bind="harness.vm_name"></h1></a>
   </div>
   <div class="pull-right" ng-show="authentication.user._id == harness.user._id">
     <a class="btn btn-primary" ui-sref="harnesses.edit({harnessId: harness._id})">

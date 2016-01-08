@@ -12,20 +12,21 @@
           <span ng-bind="harness.user.displayName"></span>
         </em>
       </small>
-        <div class="pull-right">
-          <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-success pill-label" ng-class="{'active':harness.harness_status==1}">
-              <input type="radio" ng-value=1 ng-model="harness.harness_status"> Deployed
-            </label>
-            <label class="btn btn-success pill-label" ng-class="{'active':harness.harness_status==2}">
-              <input type="radio" ng-value=2 ng-model="harness.harness_status"> Tested <span class="glyphicon glyphicon-adjust"></span>
-            </label>
-            <label class="btn btn-success pill-label" ng-class="{'active':harness. harness_status==3}" >
-              <input type="radio" ng-value=3 ng-model="harness.harness_status"> Ready <span class="glyphicon glyphicon-light"></span>
-            </label>
-          </div>
+      <div class="pull-right">
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-success pill-label" ng-class="{'active':harness.harness_status==1}">
+            <input type="radio" ng-value=1 ng-model="harness.harness_status"> Deployed
+          </label>
+          <label class="btn btn-success pill-label" ng-class="{'active':harness.harness_status==2}">
+            <input type="radio" ng-value=2 ng-model="harness.harness_status"> Tested <span class="glyphicon glyphicon-adjust"></span>
+          </label>
+          <label class="btn btn-success pill-label" ng-class="{'active':harness. harness_status==3}" >
+            <input type="radio" ng-value=3 ng-model="harness.harness_status"> Ready <span class="glyphicon glyphicon-light"></span>
+          </label>
         </div>
-        <h3 ng-bind="harness.vm_name | uppercase" style="text-transform:capitalize"></h3>
+      </div>
+        <a href="https://{{harness.vm_name}}.klipfolio.com"><h1 ng-bind="harness.vm_name"></h1></a>
+        <a href="https://{{harness.vm_name}}.klipfolio.com:3000"><h1 ng-bind="harness.vm_name"></h1></a>
 
 
         <div class="row" ng-class="{hidden:harness.wu.branch == ''}">

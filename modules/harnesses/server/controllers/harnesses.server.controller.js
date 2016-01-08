@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Harness = mongoose.model('Harness'),
+  Vm = mongoose.model('Vm'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 var Client =  require('node-rest-client').Client;
@@ -16,12 +17,6 @@ var Client =  require('node-rest-client').Client;
 exports.create = function (req, res) {
   var harness = new Harness(req.body);
   harness.user = req.user;
-
-
-  // need tc data call here
-  // URLLIB CODE HERE
-  console.log("[server] triggering urllib on harness creation");
-  console.log(harness);
 
   harness.save(function (err) {
     if (err) {
