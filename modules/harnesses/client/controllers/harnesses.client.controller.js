@@ -145,14 +145,16 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
         $scope.$broadcast('show-errors-check-validity', 'harnessForm');
         return false;
       }
-
-      // Create new Harness object
-      var harness = new Harnesses({
-        vm_name: this.vm_name,
-
-        data: $scope.data
-        // tc_build_id: this.tc_build_id   (ADDED BY REFRESH)
-      });
+      //
+      // we dont use harness, all data is vm mvc
+      // // Create new Harness object
+      // var harness = new Harnesses({
+      //   vm_name: this.vm_name,
+      //   meta_data: this.meta_data,
+      //   data: $scope.data
+      //   // tc_build_id: this.tc_build_id   (ADDED BY REFRESH)
+      // });
+      // console.log(harness)
 
 
       // Create new Vm object
@@ -161,6 +163,7 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
         expire: this.expire,
         branches: $scope.branch_list,
         data: $scope.data,
+        meta_data: this.meta_data,
         // owner: this.owner,
         force: false,
         loaded: false
@@ -241,9 +244,16 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
 
     // Find existing Harness
     $scope.refreshingFindOne = function () {
-      $scope.harness = Harnesses.get({
-        harnessId: $stateParams.harnessId
-      });
+
+      setInterval(function(){
+        console.log("reffreshing");
+        $scope.harness = Harnesses.get({
+          harnessId: $stateParams.harnessId
+        });
+      }, 10000);
+      // $scope.harness = Harnesses.get({
+      //   harnessId: $stateParams.harnessId
+      // });
     };
   }
 ])

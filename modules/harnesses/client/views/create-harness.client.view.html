@@ -21,7 +21,7 @@
 
         <div class="form-group">
           <label for="description">Description</label>
-          <input name="description" type="text" ng-model="description" id="description" class="form-control" placeholder="Meta data about the harness">
+          <input name="description" type="text" ng-model="meta_data" id="description" class="form-control" placeholder="Meta data about the harness">
         </div>
 
       </br>
@@ -45,7 +45,7 @@
 
         </div>
         <div class="col-md-6">
-          <div class="form-group">
+          <div class="list-group">
             <label for="description">WebUI</label>
             <input name="wu" type="text" ng-model="branch_list.wu.branch" id="wu" class="form-control" placeholder={{branch_list.wu.pegged}}>
           </div>

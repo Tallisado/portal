@@ -25,49 +25,53 @@
           </label>
         </div>
       </div>
-        <a href="https://{{harness.vm_name}}.klipfolio.com"><h1 ng-bind="harness.vm_name"></h1></a>
-        <a href="https://{{harness.vm_name}}.klipfolio.com:3000"><h1 ng-bind="harness.vm_name"></h1></a>
-
-
-        <div class="row" ng-class="{hidden:harness.wu.branch == ''}">
-          <div class="row col-sm-offset-1 col-sm-4">WebUI</div><div class="col-sm-3" style="" ng-bind="harness.wu.branch" ><span class="pull-right"></span></div>
-            <span style="" class="label label-primary label-pill pull-right">GRADLE</span>
-            <span class="label label-primary label-pill pull-right">API</span>
-            <span  class="label label-primary label-pill pull-right">WEB</span>
-        </div>
-        <div class="row" ng-class="{hidden:harness.dc.branch == ''}">
-          <div class="row col-sm-offset-1 col-sm-4">Data Connector</div><div class="col-sm-4" ng-bind="harness.dc.branch" ><span class="pull-right">$42</span></div>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
-        </div>
-        <div class="row" ng-class="{hidden:harness.df.branch == ''}">
-          <div class="row col-sm-offset-1 col-sm-4">Data Formula</div><div class="col-sm-4" ng-bind="harness.df.branch" ><span class="pull-right">$42</span></div>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
-        </div>
-        <div class="row" ng-class="{hidden:harness.rf.branch == ''}">
-          <div class="row col-sm-offset-1 col-sm-4">Refresh</div><div class="col-sm-4" ng-bind="harness.rf.branch" ><span class="pull-right">$42</span></div>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
-        </div>
-        <div class="row" ng-class="{hidden:harness.dp.branch == ''}">
-          <div class="row col-sm-offset-1 col-sm-4">Data Provider</div><div class="col-sm-4" ng-bind="harness.dp.branch" ><span class="pull-right">$42</span></div>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
-        </div>
-        <div class="row" ng-class="{hidden:harness.ee.branch == ''}">
-          <div class="row col-sm-offset-1 col-sm-4">Data Evaluator</div><div class="col-sm-4" ng-bind="harness.ee.branch" ><span class="pull-right">$42</span></div>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
-            <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
-        </div>
+      <div ng-class="{hidden:harness.meta_data == ''}">
+        Meta Data up in here
       </div>
-</a>
-</div>
+      <!-- <label ng-href="https://{{harness.vm_name}}.klipfolio.com">link1</label> -->
+      <!-- <a ng-href="https://{{harness.vm_name}}.klipfolio.com:3000">link1</a> -->
+      <!-- <a href="https://{{harness.vm_name}}.klipfolio.com"><h1 ng-bind="harness.vm_name"></h1></a> -->
+      <!-- <a href="https://{{harness.vm_name}}.klipfolio.com:3000"><h1 ng-bind="harness.vm_name"></h1></a> -->
+
+<!--
+      <div class="row" ng-class="{hidden:harness.wu.branch == ''}">
+        <div class="row col-sm-offset-1 col-sm-4">WebUI</div><div class="col-sm-3" style="" ng-bind="harness.wu.branch" ><span class="pull-right"></span></div>
+        <span style="" class="label label-primary label-pill pull-right">GRADLE</span>
+        <span class="label label-primary label-pill pull-right">API</span>
+        <span  class="label label-primary label-pill pull-right">WEB</span>
+      </div>
+      <div class="row" ng-class="{hidden:harness.dc.branch == ''}">
+        <div class="row col-sm-offset-1 col-sm-4">Data Connector</div><div class="col-sm-4" ng-bind="harness.dc.branch" ><span class="pull-right">$42</span></div>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
+      </div>
+      <div class="row" ng-class="{hidden:harness.df.branch == ''}">
+        <div class="row col-sm-offset-1 col-sm-4">Data Formula</div><div class="col-sm-4" ng-bind="harness.df.branch" ><span class="pull-right">$42</span></div>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
+      </div>
+      <div class="row" ng-class="{hidden:harness.rf.branch == ''}">
+        <div class="row col-sm-offset-1 col-sm-4">Refresh</div><div class="col-sm-4" ng-bind="harness.rf.branch" ><span class="pull-right">$42</span></div>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
+      </div>
+      <div class="row" ng-class="{hidden:harness.dp.branch == ''}">
+        <div class="row col-sm-offset-1 col-sm-4">Data Provider</div><div class="col-sm-4" ng-bind="harness.dp.branch" ><span class="pull-right">$42</span></div>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
+      </div>
+      <div class="row" ng-class="{hidden:harness.ee.branch == ''}">
+        <div class="row col-sm-offset-1 col-sm-4">Data Evaluator</div><div class="col-sm-4" ng-bind="harness.ee.branch" ><span class="pull-right">$42</span></div>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">GRADLE</span>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">API</span>
+        <span style="padding-left:15px" class="label label-primary label-pill pull-right">WEB</span>
+      </div> -->
+    </a>
+  </div>
 <div class="alert alert-warning text-center" ng-if="harnesses.$resolved && !harnesses.length">
   No harnesses yet, why don't you <a ui-sref="harnesses.create">create one</a>?
 </div>

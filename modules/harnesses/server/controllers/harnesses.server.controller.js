@@ -33,6 +33,7 @@ exports.create = function (req, res) {
  * Show the current harness
  */
 exports.read = function (req, res) {
+  console.log("reading");
   res.json(req.harness);
 };
 

@@ -20,13 +20,16 @@ var HarnessSchema = new Schema({
     trim: true,
     required: 'Name cannot be blank'
   },
+  meta_data: {
+    type: String,
+    default: '',
+    trim: true
+  },
   vm_id: {
     type: Schema.ObjectId
   },
   utrack_id: {
-    type: String,
-    default: '',
-    trim: true
+    type: []
   },
   tc_build_id: {
     type: String,
@@ -59,7 +62,7 @@ var HarnessSchema = new Schema({
   },
   need_refresh: {
     type: Boolean,
-    default: 'true'
+    default: 'false'
   },
   user: {
     type: Schema.ObjectId,

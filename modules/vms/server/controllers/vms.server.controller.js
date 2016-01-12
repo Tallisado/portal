@@ -11,6 +11,15 @@ var path = require('path'),
 
 var Client =  require('node-rest-client').Client;
 
+var TeamCity = require('teamcity-notifier');
+
+var tc = new TeamCity({
+  host: 'teamcity-server',
+  port: 80,
+  user: 'username',
+  password: 'password'
+});
+
 var DEFAULT_EXPIRE_MIN = 60;
 
 function dateAdd(date, interval, units) {
@@ -32,11 +41,47 @@ function dateAdd(date, interval, units) {
 /**
  * Create a vm
  */
+var buildInterval = null
+var build
+
 exports.create = function (req, res) {
   var vm = new Vm(req.body);
   vm.user = req.user;
   var harness = new Harness(req.body);
   harness.user = req.user;
+
+
+  // console.log("create causing refresh service");
+  // setInterval(function(){
+  //   console.log("create causing refresh service");
+  // }, 10000);
+
+  console.log("create causing refresh service");
+  setInterval(function(){
+    console.log(" (stale expiry) removing refresh service on this build: " + harness._id );
+    tc.stop();
+  }, 1060000);
+
+  tc.on('new-build', function(build) {
+    console.log('------ New build started for ' + build.buildTypeId);
+    if (build.VMNAME == harness.vm_name && build.parameter.UID == harness._id) {
+      buildId = build.buildId
+
+      tc.on('finished-build', function(build) {
+        console.log('Build finished for ' + build.buildTypeId);
+        if (buildId == build.buildTypeId) {
+          console.log('------ Our Build is DONE' + build.buildTypeId);
+          tc.stop();
+          harness.save(function (err) {
+            console.log('------ Our Build is DONE and SAVED');
+          });
+        }
+      });
+    }
+    harness.save(function (err) {
+      console.log('------ Our Build is STARTED and SAVED');
+    });
+  });
 
 
   var masterVMList = [
@@ -102,6 +147,7 @@ exports.create = function (req, res) {
               message: errorHandler.getErrorMessage(err)
             });
           } else {
+            tc.start();
             res.json(harness);
           }
         });

@@ -1,6 +1,22 @@
 <section ng-controller="HarnessesController" ng-init="refreshingFindOne()">
+  <div class="pull-right" ng-show="authentication.user._id == harness.user._id">
+    <a class="btn btn-primary" ng-href="http://{{harness.vm_name}}.klipfolio.com">
+      <i class="glyphicon glyphicon-eye-open"></i>
+    </a>
+    <a class="btn btn-primary" ng-click="">
+      <i class="glyphicon glyphicon-eye-open"></i>
+    </a>
+  </div>
   <div class="page-header">
     <a href="/vms/{{harness.vm_id}}"><h1 ng-bind="harness.vm_name"></h1></a>
+    <small>
+      <em class="text-muted">
+        Created on
+        <span ng-bind="harness.created | date:'mediumDate'"></span>
+        by
+        <span ng-bind="harness.user.displayName"></span>
+      </em>
+    </small>
   </div>
   <div class="pull-right" ng-show="authentication.user._id == harness.user._id">
     <a class="btn btn-primary" ui-sref="harnesses.edit({harnessId: harness._id})">
@@ -10,36 +26,154 @@
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="harness.created | date:'mediumDate'"></span>
-      by
-      <span ng-bind="harness.user.displayName"></span>
-    </em>
-    <br/>
-    <br/>
-    {{harness.data.testmode}}
-    <br/>
 
-    <br/>
+  <label for="">General</label>
+  <input ng-model="harness.meta_data">
+  </input>
+  <br/>
+  <br/>
 
-    DEBUG:: Harness Testing: {{harness.data.testresults}}
-    DEBUG:: Harness Status: {{harness.harness_status}}
-    <div class="btn-group" data-toggle="buttons">
+  <div class="pull-right" ng-show="authentication.user._id == harness.user._id">
+    <a class="btn btn-primary" ui-sref="harnesses.edit({harnessId: harness._id})">
+      <i class="glyphicon glyphicon-refresh"></i>
+    </a>
+  </div>
+  <label for="">Testing</label>
+
+  <div class="container" style="padding-top:15px">
+    <div class="row">
+      <div class="col-md-4">
       <label class="btn btn-success" ng-class="{'active':harness.harness_status==0001}" >
-        <input type="radio" ng-value=1 ng-model="harness.harness_status"> Deploying <span class="glyphicon glyphicon-file"></span>
+        <label type="select" ng-value=1 ng-model="harness.harness_status"> Unit Testing
+          <span class="glyphicon glyphicon-file"></span>
+        </label>
       </label>
-      <label class="btn btn-success" ng-class="{'active':harness.harness_status==0010}" ng-init="{'active':harness_status==2}">
-        <input type="radio" ng-value=2 ng-model="harness.harness_status"> Deployed <span class="glyphicon glyphicon-adjust"></span>
+      <label class="btn btn-primary" ng-model="teamcity.testresults.webui.p" ng-class="{'active':harness.harness_status==0100}" >
       </label>
-      <label class="btn pull-right btn-primary" ng-bind="harness.data.testresults.webui.p" ng-class="{'active':harness.harness_status==0100}" >
-      </label>
-
-
-
+      {{teamcity.testresults.webui.p}}
     </div>
-    <br/><br/> debug:: Selected Item: <b>{{harness.harness_status}}</b>
-  </small>
+    <div class="col-md-8">
+      <label class="btn btn-success" ng-class="{'active':harness.harness_status==0001}" >
+        <label type="select" ng-value=1 ng-model="harness.harness_status"> System Testing
+          <span class="glyphicon glyphicon-file"></span>
+        </label>
+      </label>
+      <label class="btn btn-primary" ng-bind="harness.data.testresults.webui.p" ng-class="{'active':harness.harness_status==0100}" >
+      </label>
+    </div>
+
+    <div class="col-md-4">
+    <label class="btn btn-success" ng-class="{'active':harness.harness_status==0001}" >
+      <label type="select" ng-value=1 ng-model="harness.harness_status"> Load Testing
+        <span class="glyphicon glyphicon-file"></span>
+      </label>
+    </label>
+    <label class="btn btn-primary" ng-bind="harness.data.testresults.webui.p" ng-class="{'active':harness.harness_status==0100}" >
+    </label>
+    </div>
+    <div class="col-md-8">
+    <label class="btn btn-success" ng-class="{'active':harness.harness_status==0001}" >
+      <label type="select" ng-value=1 ng-model="harness.harness_status"> API Testing
+        <span class="glyphicon glyphicon-file"></span>
+      </label>
+    </label>
+    <label class="btn btn-primary" ng-bind="harness.data.testresults.webui.p" ng-class="{'active':harness.harness_status==0100}" >
+    </label>
+    </div>
+
+    <div class="col-md-4">
+    <label class="btn btn-success" ng-class="{'active':harness.harness_status==0001}" >
+      <label type="select" ng-value=1 ng-model="harness.harness_status"> Functional Testing
+        <span class="glyphicon glyphicon-file"></span>
+      </label>
+    </label>
+    <label class="btn btn-primary" ng-bind="harness.data.testresults.webui.p" ng-class="{'active':harness.harness_status==0100}" >
+    </label>
+  </div>
+  <div class="col-md-8">
+    <label class="btn btn-success" ng-class="{'active':harness.harness_status==0001}" >
+      <label type="select" ng-value=1 ng-model="harness.harness_status"> Performance Testing
+        <span class="glyphicon glyphicon-file"></span>
+      </label>
+    </label>
+    <label class="btn btn-primary" ng-bind="harness.data.testresults.webui.p" ng-class="{'active':harness.harness_status==0100}" >
+    </label>
+  </div>
+</div>
+</div>
+
+<br/>
+<br/>
+
+<!-- <div class="pull-right" ng-show="authentication.user._id == harness.user._id">
+<a class="btn btn-primary" ui-sref="harnesses.edit({harnessId: harness._id})">
+<i class="glyphicon glyphicon-thumbs-down"></i>
+</a>
+<a class="btn btn-primary" ng-click="">
+<i class="glyphicon glyphicon-thumbs-up"></i>
+</a>
+</div>
+<br/> -->
+
+<label for="">Deployment</label>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="list-group">
+        <a class="list-group-item">
+          <label for="description">Web UI</label><br/>
+          <label ng-model="branch_list.wu.branch" >feature/gogogadget</label>
+        </a>
+      </div>
+      <div class="list-group">
+        <a class="list-group-item">
+          <label for="description">Data Connector</label><br/>
+          <label ng-model="branch_list.dc.branch" >feature/gogogadget</label>
+        </a>
+      </div>
+      <div class="list-group">
+        <a class="list-group-item">
+          <label for="description">Data Formula</label><br/>
+          <label ng-model="branch_list.df.branch">feature/gogogadget</label>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <a class="list-group-item">
+          <label for="description">Data Provider</label><br/>
+          <label ng-model="branch_list.dp.branch" >feature/gogogadget</label>
+        </a>
+      </div>
+      <div class="list-group">
+        <a class="list-group-item">
+          <label for="description">Refresh</label><br/>
+          <label ng-model="branch_list.rf.branch" >feature/gogogadget</label>
+        </a>
+      </div>
+      <div class="list-group">
+        <a class="list-group-item">
+          <label for="description">Expression Evaluator</label><br/>
+          <label ng-model="branch_list.ee.branch" >feature/gogogadget</label>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+debug:: Selected Item: <b>{{harness.harness_status}}
+
+  <div class="btn-group pull-right" data-toggle="buttons">
+    <label class="btn btn-success" ng-class="{'active':harness.harness_status==0001}" >
+      <input type="radio" ng-value=1 ng-model="harness.harness_status"> Deploying <span class="glyphicon glyphicon-file"></span>
+    </label>
+    <label class="btn btn-success" ng-class="{'active':harness.harness_status==0010}" ng-init="{'active':harness_status==2}">
+      <input type="radio" ng-value=2 ng-model="harness.harness_status"> Deployed <span class="glyphicon glyphicon-adjust"></span>
+    </label>
+    <label class="btn pull-right btn-primary" ng-bind="harness.data.testresults.webui.p" ng-class="{'active':harness.harness_status==0100}" >
+    </label>
+  </div>
+
+  <br/><br/> </b>
   <p class="lead" ng-bind="harness.content"></p>
 </section>
