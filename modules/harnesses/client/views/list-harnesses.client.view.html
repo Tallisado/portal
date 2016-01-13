@@ -3,7 +3,7 @@
     <h1>Harnesses</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="harness in harnesses" ui-sref="harnesses.view({harnessId: harness._id})" class="list-group-item">
+    <a ng-repeat="harness in harnesses" ui-sref="harnesses.view({harnessId: harness._id})" class="list-group-item" style="padding-bottom:20px;">
       <small>
         <em class="text-muted">
           Posted on
@@ -25,8 +25,8 @@
           </label>
         </div>
       </div>
-      <div ng-class="{hidden:harness.meta_data == ''}">
-        Meta Data up in here
+      <div ng-bind="harness.meta_data">
+        Empty
       </div>
       <!-- <label ng-href="https://{{harness.vm_name}}.klipfolio.com">link1</label> -->
       <!-- <a ng-href="https://{{harness.vm_name}}.klipfolio.com:3000">link1</a> -->

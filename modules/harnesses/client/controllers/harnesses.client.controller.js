@@ -5,6 +5,22 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
   function ($scope, $stateParams, $location, Authentication, Harnesses, Vms) {
     $scope.authentication = Authentication;
 
+    $scope.pageUrlId = null
+    $scope.stopWatching = false;
+    // $scope.$on('$locationChangeStart', function( event ) {
+    //   if ($scope.pageUrlId === $location.path()) return;
+    //   $scope.stopWatching = true;
+    //   console.log("STOP WATCHING PAGE")
+    //   clearInterval($scope.intervalWatching)
+    //
+    //   // var answer = confirm("Are you sure you want to leave this page?")
+    //   // if (!answer) {
+    //   //     event.preventDefault();
+    //   // }
+    // });
+
+
+    $scope.intervalWatching = null
     $scope.disable_tests = true;
 
     $scope.branch_list = { webui: { pegged: 'develop', branch:"" },
@@ -16,6 +32,8 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
                   rf: { pegged: 'develop', name: 'dc', branch:"" },
 
     }
+
+
 
     $scope.data = {
       testmode : {
@@ -156,7 +174,6 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
       // });
       // console.log(harness)
 
-
       // Create new Vm object
       var vm = new Vms({
         vm_name: this.vm_name,
@@ -181,6 +198,7 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
       console.log("saving")
       // Redirect after save
       vm.$save(function (response) {
+        $scope.pageUrlId = 'harnesses/' + response._id
         $location.path('harnesses/' + response._id);
         //
         // // Clear form fields
@@ -244,16 +262,18 @@ angular.module('harnesses').controller('HarnessesController', ['$scope', '$state
 
     // Find existing Harness
     $scope.refreshingFindOne = function () {
+      $scope.harness = Harnesses.get({
+        harnessId: $stateParams.harnessId
+      });
 
-      setInterval(function(){
-        console.log("reffreshing");
-        $scope.harness = Harnesses.get({
-          harnessId: $stateParams.harnessId
-        });
-      }, 10000);
-      // $scope.harness = Harnesses.get({
-      //   harnessId: $stateParams.harnessId
-      // });
+      // $scope.intervalWatching = setInterval(function(){
+      //   console.log("reffreshing: stop watching? " + $scope.stopWatching);
+      //   //if ($scope.stopWatching ) { clearInterval($scope.intervalWatching); return }
+      //   $scope.harness = Harnesses.get({
+      //     harnessId: $stateParams.harnessId
+      //   });
+      // }, 10000);
+
     };
   }
 ])

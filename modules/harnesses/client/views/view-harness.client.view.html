@@ -164,10 +164,13 @@
 debug:: Selected Item: <b>{{harness.harness_status}}
 
   <div class="btn-group pull-right" data-toggle="buttons">
-    <label class="btn btn-success" ng-class="{'active':harness.harness_status==0001}" >
+    <label class="btn btn-warning" ng-class="{'hidden':harness.harness_expired==1}" >
+      <input type="radio" ng-value=1 ng-model="harness.harness_status"> Expired <span class="glyphicon glyphicon-file"></span>
+    </label>
+    <label class="btn btn-success" ng-class="{'active':harness.harness_status==1}" >
       <input type="radio" ng-value=1 ng-model="harness.harness_status"> Deploying <span class="glyphicon glyphicon-file"></span>
     </label>
-    <label class="btn btn-success" ng-class="{'active':harness.harness_status==0010}" ng-init="{'active':harness_status==2}">
+    <label class="btn btn-success" ng-class="{'active':harness.harness_status==2}" ng-init="{'active':harness_status==2}">
       <input type="radio" ng-value=2 ng-model="harness.harness_status"> Deployed <span class="glyphicon glyphicon-adjust"></span>
     </label>
     <label class="btn pull-right btn-primary" ng-bind="harness.data.testresults.webui.p" ng-class="{'active':harness.harness_status==0100}" >

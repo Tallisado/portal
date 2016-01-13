@@ -59,29 +59,29 @@ exports.create = function (req, res) {
   console.log("create causing refresh service");
   setInterval(function(){
     console.log(" (stale expiry) removing refresh service on this build: " + harness._id );
-    tc.stop();
+    // tc.stop();
   }, 1060000);
 
-  tc.on('new-build', function(build) {
-    console.log('------ New build started for ' + build.buildTypeId);
-    if (build.VMNAME == harness.vm_name && build.parameter.UID == harness._id) {
-      buildId = build.buildId
-
-      tc.on('finished-build', function(build) {
-        console.log('Build finished for ' + build.buildTypeId);
-        if (buildId == build.buildTypeId) {
-          console.log('------ Our Build is DONE' + build.buildTypeId);
-          tc.stop();
-          harness.save(function (err) {
-            console.log('------ Our Build is DONE and SAVED');
-          });
-        }
-      });
-    }
-    harness.save(function (err) {
-      console.log('------ Our Build is STARTED and SAVED');
-    });
-  });
+  // tc.on('new-build', function(build) {
+  //   console.log('------ New build started for ' + build.buildTypeId);
+  //   if (build.VMNAME == harness.vm_name && build.parameter.UID == harness._id) {
+  //     buildId = build.buildId
+  //
+  //     tc.on('finished-build', function(build) {
+  //       console.log('Build finished for ' + build.buildTypeId);
+  //       if (buildId == build.buildTypeId) {
+  //         console.log('------ Our Build is DONE' + build.buildTypeId);
+  //         tc.stop();
+  //         harness.save(function (err) {
+  //           console.log('------ Our Build is DONE and SAVED');
+  //         });
+  //       }
+  //     });
+  //   }
+  //   harness.save(function (err) {
+  //     console.log('------ Our Build is STARTED and SAVED');
+  //   });
+  // });
 
 
   var masterVMList = [
@@ -147,7 +147,7 @@ exports.create = function (req, res) {
               message: errorHandler.getErrorMessage(err)
             });
           } else {
-            tc.start();
+            // tc.start();
             res.json(harness);
           }
         });
